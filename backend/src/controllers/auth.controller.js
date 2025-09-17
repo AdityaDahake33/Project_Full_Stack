@@ -91,24 +91,28 @@ async function logoutUser(req, res) {
 }
 
 async function registerFoodPartner(req, res){
-    const {Name, Email , Password} = req.body;
+    const { RestaurantName, BusinessEmail, PhoneNumber, Address, Password } = req.body;
 
     const isAccountAlreadyExists = await foodpartnerModel.findOne({
-        Email
+        Email: BusinessEmail
     })
 
-    if(isAccountAlreadyExists){
-        return res.status(400).json({
-            message: "Food partner account already exists"
-        })
-    }
+        if(isAccountAlreadyExists){
+            return res.status(400).json({
+                message: "Food partner account already exists"
+            })
+        }
 
     const hashedPassword = await bcrypt.hash(Password,10);
 
     const foodparentner = await foodpartnerModel.create({
-        Name,
-        Email,
-        Password: hashedPassword
+        RestaurantName,
+        BusinessEmail,
+        PhoneNumber,
+        Address,
+        Password: hashedPassword,
+
+
     })
 
     const token = jwt.sign({
