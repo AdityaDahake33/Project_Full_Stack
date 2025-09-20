@@ -1,6 +1,31 @@
 import { Link } from 'react-router-dom';
+import axios from 'axios';
+
+
+
+
+
 
 export default function UserRegister() {
+
+const handlerSubmit = async (e) => {
+  e.preventDefault();
+  const { FullName, Email, Password } = e.target.elements;
+  try {
+    const response = await axios.post('http://localhost:3000/api/auth/user/register', {
+      FullName: FullName.value,
+      Email: Email.value,
+      Password: Password.value
+    });
+    console.log(response.data);
+  } catch (error) {
+    console.error('Registration failed:', error.response.data);
+  }
+}
+
+
+
+
   return (
     <div className="auth-container">
       <h2 className="auth-title">User Registration</h2>
