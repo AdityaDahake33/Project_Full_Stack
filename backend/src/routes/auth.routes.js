@@ -1,19 +1,20 @@
 const express = require('express');
-const authController = require('../controllers/auth.controller');
+const authController = require('../controller/auth.controller');
 
 
 const router = express.Router();
 
-
-// User Routes API
-router.post('/user/register', authController.registerUser)
-router.post('/user/login', authController.loginUser)
-router.get('/user/logout', authController.logoutUser)
+//user routes
+router.post('/user/register',authController.registerUser);
+router.post('/user/login',authController.loginUser);
+router.get('/user/logout',authController.logoutUser);
 
 //food partner routes
-router.post('/foodpartner/register', authController.registerFoodPartner)
-router.post('/foodpartner/login', authController.loginFoodPartner)
-router.get('/foodpartner/logout', authController.logoutFoodPartner)
+router.post('/foodpartner/register',authController.registerFoodPartner);
+router.post('/foodpartner/login',authController.loginFoodPartner);
+router.get('/foodpartner/logout',authController.logoutFoodPartner);
+
+
 
 
 
