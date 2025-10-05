@@ -21,24 +21,19 @@ const UserRegister = () => {
         password: e.target.password.value
       };
 
-      const response = await axios.post('http://localhost:3000/api/auth/user/register', formData);
+      await axios.post('http://localhost:3000/api/auth/user/register', formData, {
+        withCredentials: true,
+        headers: {
+          'Content-Type': 'application/json',
+        }
+      });
+
+      // Directly navigate to home page after successful registration
       navigate('/');
-    } catch (err) {
-      console.error('Registration error:', err);
       
-      if (err.response) {
-        // Server responded with error
-        console.error('Server error:', err.response.data);
-        setError(err.response.data.message || 'Registration failed. Please try again.');
-      } else if (err.request) {
-        // Request made but no response
-        console.error('No response from server');
-        setError('Cannot connect to server. Please try again later.');
-      } else {
-        // Request setup error
-        console.error('Request error:', err.message);
-        setError('An error occurred. Please try again.');
-      }
+    } catch (error) {
+      console.error('Registration error:', error.response?.data || error.message);
+      setError(error.response?.data?.message || 'Registration failed');
     } finally {
       setLoading(false);
     }

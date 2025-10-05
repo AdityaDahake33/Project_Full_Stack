@@ -22,9 +22,21 @@ async function registerUser(req,res){
         email,
         password:hashPassword
     })
-    const token = jwt.sign({
-        userId:user._id
-    },process.env.JWT_SECRET);
+
+      // Generate JWT token
+    const token = jwt.sign(
+      { userId: user._id, email: user.email },
+      process.env.JWT_SECRET,
+      { expiresIn: '24h' }
+    );
+
+    // Set token in cookie
+    res.cookie('token', token, {
+      httpOnly: true,
+      secure: process.env.NODE_ENV === 'production',
+      sameSite: 'lax',
+      maxAge: 24 * 60 * 60 * 1000 // 24 hours
+    });
 
     res.status(201).json({
         message:"User registered successfully",

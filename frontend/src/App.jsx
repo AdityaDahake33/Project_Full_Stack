@@ -4,7 +4,7 @@ import UserLogin from './components/auth/UserLogin';
 import UserRegister from './components/auth/UserRegister';
 import PartnerLogin from './components/auth/PartnerLogin';
 import PartnerRegister from './components/auth/PartnerRegister';
-import Home from '../src/general'; // Create this component
+import Home from './components/general/Home'; // Updated import path
 import './styles/theme.css';
 
 const App = () => {
