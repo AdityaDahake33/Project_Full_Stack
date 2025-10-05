@@ -10,9 +10,6 @@ app.use(cookieParser());
 app.use(express.json());
 
 
-app.get('/',(req , res) =>{
-    res.send("hello");
-})
 app.use('/api/auth',authRoutes);
 app.use('/api/food',foodRoutes);
 

@@ -18,7 +18,23 @@ async function authFoodPartnerMiddleware(req,res,next){
     }
 }
 
+async function authFoodMiddleware(req,res,next){
+
+    const token = req.cookies.token;
+    if(!token){
+        return res.status(401).json({message:"Please Login First"});
+    }
+    try{
+        const decoded = jwt.verify(token,process.env.JWT_SECRET);
+        const food = await foodModel.findById(decoded.id);
+        req.food = food;
+        next();
+    }catch(err){
+        return res.status(401).json({message:"Please Login First"});
+    }
+}
 
 module.exports = {
     authFoodPartnerMiddleware,
+    authFoodMiddleware,
 };  

@@ -4,7 +4,6 @@ const foodPartnerModel = require('./foodpartner.model');
 const foodSchema = new mongoose.Schema({
     FoodName:{
         type:String,
-        required: true
     },
     FoodVideo:{
         type:String,
@@ -13,14 +12,12 @@ const foodSchema = new mongoose.Schema({
     FoodDescription:{
         type:String,
     },
-    FoodPrice:{
+    FoodPriceFoodPrice:{
         type:Number,
-        required: true
     },
     foodPartner:{
         type:mongoose.Schema.Types.ObjectId,
         ref:"foodpartner",
-        required: true
     }
 })
 
