@@ -17,15 +17,12 @@ const UserRegister = () => {
       const formData = {
         FirstName: e.target.firstName.value,
         LastName: e.target.lastName.value,
-        email: e.target.email.value, // Changed to match schema
-        password: e.target.password.value // Changed to match schema
+        email: e.target.email.value,
+        password: e.target.password.value
       };
 
-      console.log('Sending registration data:', formData);
-
       const response = await axios.post('http://localhost:3000/api/auth/user/register', formData);
-      console.log('Registration successful:', response.data);
-      navigate('/login');
+      navigate('/');
     } catch (err) {
       console.error('Registration error:', err);
       
