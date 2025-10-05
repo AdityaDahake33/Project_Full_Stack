@@ -7,7 +7,15 @@ export default defineConfig({
   server: {
     port: 5173,
     headers: {
-      "Content-Security-Policy": "default-src 'self'; script-src 'self' 'unsafe-inline' 'unsafe-eval'; style-src 'self' 'unsafe-inline'; connect-src 'self' http://localhost:3000; font-src 'self' https://fonts.gstatic.com; img-src 'self' data: https:"
+      "Content-Security-Policy": `
+        default-src 'self';
+        script-src 'self' 'unsafe-inline' 'unsafe-eval';
+        style-src 'self' 'unsafe-inline';
+        media-src 'self' https://ik.imagekit.io data: blob:;
+        connect-src 'self' http://localhost:3000 https://ik.imagekit.io;
+        img-src 'self' data: https: blob:;
+        font-src 'self' data:;
+      `.replace(/\s+/g, ' ').trim()
     }
   }
 })
