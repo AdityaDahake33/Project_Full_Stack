@@ -24,7 +24,6 @@ const PartnerRegister = () => {
         BusinessState: e.target.businessState.value
       };
 
-      // Updated endpoint to match backend routes
       const response = await axios.post('http://localhost:3000/api/auth/foodpartner/register', formData, {
         withCredentials: true,
         headers: {
@@ -33,7 +32,8 @@ const PartnerRegister = () => {
       });
 
       console.log('Registration successful:', response.data);
-      navigate('/partner/login');
+      navigate('/Create-food');
+
     } catch (error) {
       console.error('Registration error:', error.response?.data || error.message);
       setError(error.response?.data?.message || 'Registration failed');
