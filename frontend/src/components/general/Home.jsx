@@ -1,36 +1,51 @@
-import React from 'react';
+import React, { useState, useEffect } from 'react';
 import VideoCard from '../video/VideoCard';
+import axios from 'axios';
 import '../../styles/home.css';
 
 const Home = () => {
-  const videos = [
-    {
-      id: 1,
-      videoUrl: 'https://ik.imagekit.io/foodies356/eb8a4e14-d444-4049-a40d-02edbbb5ca1a_vmsS5Op4r',
-      description: 'Classic cheeseburger with melted cheddar, fresh lettuce, tomatoes, and our secret sauce.',
-      storeName: 'Burger House',
-      storeId: '123'
-    },
-    {
-      id: 2,
-      videoUrl: 'https://ik.imagekit.io/foodies356/eb8a4e14-d444-4049-a40d-02edbbb5ca1a_vmsS5Op4r',
-      description: 'Double patty burger with bacon, caramelized onions, and BBQ sauce.',
-      storeName: 'Grill Master',
-      storeId: '124'
-    },
-    {
-      id: 3,
-      videoUrl: 'https://ik.imagekit.io/foodies356/eb8a4e14-d444-4049-a40d-02edbbb5ca1a_vmsS5Op4r',
-      description: 'Veggie burger made with fresh mushrooms, quinoa, and special herbs.',
-      storeName: 'Green Bites',
-      storeId: '125'
-    }
-  ];
+  const [videos, setVideos] = useState([]);
+  const [loading, setLoading] = useState(true);
+  const [error, setError] = useState(null);
+
+  useEffect(() => {
+    const fetchVideos = async () => {
+      try {
+        const response = await axios.get('http://localhost:3000/api/food/', {
+          withCredentials: true,
+          headers: {
+            'Content-Type': 'application/json'
+          }
+        });
+        
+        if (response.data.food) {
+          setVideos(response.data.food);
+        }
+      } catch (err) {
+        console.error('Error fetching videos:', err);
+        setError('Failed to load videos. Please login first.');
+      } finally {
+        setLoading(false);
+      }
+    };
+
+    fetchVideos();
+  }, []);
+
+  if (loading) return <div className="loading-screen">Loading videos...</div>;
+  if (error) return <div className="error-message">{error}</div>;
+  if (!videos.length) return <div className="error-message">No videos available</div>;
 
   return (
     <div className="reels-container">
       {videos.map((video) => (
-        <VideoCard key={video.id} video={video} />
+        <VideoCard 
+          key={video._id} 
+          videoUrl={video.FoodVideo}
+          partnerId={video.foodPartner}
+          videoDescription={video.FoodDescription}
+          videoName={video.FoodName}
+        />
       ))}
     </div>
   );

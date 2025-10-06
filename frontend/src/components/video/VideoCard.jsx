@@ -1,13 +1,16 @@
 import React, { useEffect, useRef, useState } from 'react';
 import { Link } from 'react-router-dom';
 
-const VideoCard = ({ video }) => {
+const VideoCard = ({ videoUrl, partnerId, videoDescription, videoName }) => {
   const videoRef = useRef(null);
   const [isLoading, setIsLoading] = useState(true);
 
   useEffect(() => {
     const videoElement = videoRef.current;
     if (!videoElement) return;
+
+    // Set credentials for video element
+    videoElement.crossOrigin = 'anonymous';
 
     const handleLoadedData = () => {
       setIsLoading(false);
@@ -27,7 +30,10 @@ const VideoCard = ({ video }) => {
         entries.forEach(entry => {
           if (entry.isIntersecting) {
             videoElement.play().catch(err => {
-              console.warn('Autoplay prevented:', err);
+              // Only log a warning if it's not an AbortError
+              if (err.name !== 'AbortError') {
+                console.warn('Autoplay prevented:', err);
+              }
             });
           } else {
             videoElement.pause();
@@ -58,23 +64,30 @@ const VideoCard = ({ video }) => {
         muted
         playsInline
         preload="auto"
-        poster={video.thumbnail}
+        crossOrigin="anonymous"
       >
         <source 
-          src={video.videoUrl} 
+          src={videoUrl} 
           type="video/mp4"
         />
         Your browser does not support video playback.
       </video>
       
       <div className="video-overlay">
-        <p className="video-description">{video.description}</p>
-        <Link 
-          to={`/store/${video.storeId}`} 
-          className="store-button"
-        >
-          Visit {video.storeName}
-        </Link>
+        {partnerId && (
+          <Link 
+            to={`/store/${partnerId}`} 
+            className="store-button"
+          >
+            Visit Store
+          </Link>
+        )}
+        {videoDescription && (
+          <p className="video-description">{videoDescription}</p>
+        )}
+        {videoName && (
+          <h3 className="video-name">{videoName}</h3>
+        )}
       </div>
     </div>
   );
