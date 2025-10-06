@@ -1,5 +1,4 @@
 const mongoose = require('mongoose');
-const foodPartnerModel = require('./foodpartner.model');
 
 const foodSchema = new mongoose.Schema({
     FoodName:{
@@ -12,7 +11,7 @@ const foodSchema = new mongoose.Schema({
     FoodDescription:{
         type:String,
     },
-    FoodPriceFoodPrice:{
+    FoodPrice:{
         type:Number,
     },
     foodPartner:{

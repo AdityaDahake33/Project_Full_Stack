@@ -1,1 +1,28 @@
-@import "tailwindcss";
+.food-info-container {
+  display: flex;
+  flex-direction: column;
+  position: absolute;
+  bottom: 80px;
+  left: 16px;
+  gap: 8px;
+}
+
+.food-name {
+  font-weight: 700;
+  font-size: 1.25rem;
+}
+
+.visit-store-button {
+  position: absolute;
+  bottom: 16px;
+  left: 16px;
+  background-color: #2563eb;
+  color: white;
+  padding: 10px 20px;
+  border-radius: 8px;
+  font-weight: 600;
+  text-decoration: none;
+  text-align: center;
+  box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1);
+  transition: all 0.2s ease;
+}

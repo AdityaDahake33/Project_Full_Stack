@@ -74,14 +74,12 @@ const VideoCard = ({ videoUrl, partnerId, videoDescription, videoName }) => {
       </video>
       
       <div className="video-overlay">
-        {partnerId && (
-          <Link 
-            to={`/store/${partnerId}`} 
-            className="store-button"
-          >
-            Visit Store
-          </Link>
-        )}
+        <Link 
+          to={`/food-partner/${partnerId || ''}`} 
+          className="visit-store-button"
+        >
+          Visit Store
+        </Link>
         {videoDescription && (
           <p className="video-description">{videoDescription}</p>
         )}
